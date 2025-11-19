@@ -1,0 +1,102 @@
+როგორ გავაკეთე Google Auth სეთაფი.
+
+1. პირველ რიგში შევცვალე Podfile:
+  - use_modular_headers! დავამატე config = use_native_modules! და flags = get_default_flags() შუაში, ფექეჯების დაინსტალირებისთვის, რადგან firebase-ის ფექეჯებთან პრობლემა ჰქონდა.
+  - მოვაშორე:
+  if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+  end
+  - ზემოთ კოდის მაგივრად დავამატე - "use_frameworks! :linkage => :static"
+
+2. დავაინსტალირე ფექეჯები:
+
+  "dependencies": {
+    "@react-native-firebase/app": "^23.5.0",
+    "@react-native-firebase/auth": "^23.5.0",
+    "@react-native-firebase/database": "^23.5.0",
+    "@react-native-google-signin/google-signin": "^16.0.0",
+    "@react-native-vector-icons/ionicons": "^12.3.0",
+    "@react-native/new-app-screen": "0.82.1",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-mmkv": "^4.0.0",
+    "react-native-nitro-modules": "^0.31.6",
+    "react-native-safe-area-context": "^5.5.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@react-native-community/cli-platform-ios": "20.0.0",
+    "@react-native/babel-preset": "0.82.1",
+    "@react-native/eslint-config": "0.82.1",
+    "@react-native/metro-config": "0.82.1",
+    "@react-native/typescript-config": "0.82.1",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.1.1",
+    "@types/react-test-renderer": "^19.1.0",
+    "eslint": "^8.19.0",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.1.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+
+
+3. გავაკეთე firebase პროექტი და ჩავრთე აუთენთიფიკაცია, Google და Email/Pass
+
+4. დავამატე ios, android და web აპლიკაციები. აუცილებელია რო ყველა აპლიკაციას id ჰქონდეს იგივე რაც react native-ის id-ია, ამ აპლიკაციის შემთხვევაში com.cloneproject.
+
+5. სანამ პროექტს გავუშვებდი, გავმართე ios გარემო
+- გადმოვწერე GoogleService-Info.plist
+- შევედი XCode-ში, კონკრეტულად ios/cloneproject.xcworkspace და იქიდან დავამატე ios root ფოლდერში - /Users/user/Desktop/cloneproject/ios/GoogleService-Info.plist. აუცილებელია რო მონიშნო checkbox ფაილის სახელის გვერძე როცა ფაილში აგდებ, [+] cloneproject. 
+- AppDelegate.switft-ში:
+  - იმპორტებში დავამატე - import FirebaseCore, 
+  - application ფუნქციაში, დეკლარირების შემდეგ პირველ ხაზზე დავამატე - FirebaseApp.configure() 
+  - მთავარი სკოუპის გარეთ დავამატე:
+  - func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    return RCTLinkingManager.application(app, open: url, options: options)
+  }
+- Info.plist-ში:
+  - შევქმენი ახალი row, URL types-ის და item 0 ()-ში დავამატე URL Schemes, item 0-ის ველში ჩავწერე GoogleService-Info.plist-დან წამოღებული REVERSED_CLIENT_ID.
+
+6. შევედი Google Cloud Console-ზე
+  - ვნახე firebase-ის შექმნილი პროექტი, იგივე id-ით რაც firebase პროექტია. credential-ში, OAuth 2.0 Client IDs-ის დაბლა არის 3 id. ჩემ შემთხვევაში web id წავშალე შეცდომით, ახალ web client application-ს თუ შექმნი, პრობლემა არ იქნება. 
+  - web-ისაზე შევედი და წამოვიღე Client ID და Client Secret.
+  - გადავედი firebase > authentication > sign-in method და დავაჭირე google-ის პროვაიდერს. 
+  - Web SDK configuration-ში ჩავწერე Client ID და დაბლა Client Secret.
+
+7. გავმართე android გარემო
+  - დავამატე google-services.json android/app-ში - /Users/user/Desktop/cloneproject/android/app/google-services.json.
+  - android/app/build.gradle-ში ბოლო იმპორტად დავამატე - apply plugin: 'com.google.gms.google-services'
+  - android/build.gradle-ში dependencies-ში ბოლო დავამატე - classpath("com.google.gms:google-services:4.4.4")
+  
+8. შევედი android ფოლდერში და ჩავწერე - ./gradlew signingReport. წამოვიღე SHA1 სუ პირველი, რომელსაც debug ვარიანტი ჰქონდა.
+  - შევედი firebase-ზე, აპლიკაციები სადაც არი, დავაჭირე android აპლიკაციას და მივუთითე წამოღებული SHA1 - SHA certificate fingerprints-ში.
+
+9. გუგლით Sign-in რო გავაკეთოთ საჭიროა GoogleSignin.configure({})-ში მივუთითოთ webClientId: რომელიც არის ის Client ID რომელიც წამოვიღეთ Google Cloud Console-ის ჩვენი პროექტიდან და პროვაიდერებში Web SDK configuration-ის გასამართად გამოვიყენეთ. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
