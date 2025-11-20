@@ -22,7 +22,7 @@ const SignIn = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { login } = useAuth();
 
-  const isFormValid = email.includes('@') && password.length > 3;
+  const isFormValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && password.length > 3;
 
   const onPress = async () => {
     if (!isFormValid) return;

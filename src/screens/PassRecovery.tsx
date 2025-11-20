@@ -15,7 +15,7 @@ const PassRecovery = () => {
   const [email, setEmail] = useState('')
   const navigation = useNavigation<NavigationProp<RootStackParamList>>()
 
-  const isFormValid = email.includes('@')
+  const isFormValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
   const onPress = async () => {
     if (!isFormValid) return
