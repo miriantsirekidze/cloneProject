@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { View, Text, StyleSheet, Alert } from 'react-native'
-import { passwordRecovery } from '../utils/authService'
+import { passwordRecovery } from '../utils/firebase/authService'
 import { useNavigation, NavigationProp } from '@react-navigation/native'
 
 import EmailTextInput from '../components/auth/EmailTextInput'

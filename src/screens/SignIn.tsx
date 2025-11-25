@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, Alert, TouchableOpacity } from 'react-native';
-import { loginWithEmail } from '../utils/authService';
+import { loginWithEmail } from '../utils/firebase/authService';
 import { useAuth } from '../context/AuthContext';
 import {
   useNavigation,

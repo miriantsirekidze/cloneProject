@@ -11,7 +11,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { storage, STORAGE_KEYS } from './store';
+import { storage, STORAGE_KEYS } from '../store';
 
 interface AuthResponse {
   success: boolean;

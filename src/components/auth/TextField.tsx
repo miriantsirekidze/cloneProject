@@ -8,14 +8,25 @@ interface Props {
   onChange: (text: string) => void;
   title: string;
   placeholder: string;
+  isTaken?: boolean;
 }
 
-const TextField = ({ value, onChange, title, placeholder }: Props) => {
+const TextField = ({ value, onChange, title, placeholder, isTaken }: Props) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{title}</Text>
-      <View style={[styles.textContainer, isFocused ? styles.focusedBorder : styles.unfocusedBorder]}>
+    <View>
+      <View style={styles.usernameContainer}>
+        <Text style={styles.label}>{title}</Text>
+        {
+          isTaken ? <Text style={styles.takenUsername}>Taken, try another one</Text> : null
+        }
+      </View>
+      <View
+        style={[
+          styles.textContainer,
+          isTaken ? styles.errorBorder : isFocused ? styles.focusedBorder : styles.unfocusedBorder,
+        ]}
+      >
         <TextInput
           value={value}
           onChangeText={onChange}
@@ -35,7 +46,6 @@ const TextField = ({ value, onChange, title, placeholder }: Props) => {
 export default TextField;
 
 const styles = StyleSheet.create({
-  container: {},
   textContainer: {
     width: width * 0.9,
     height: height * 0.06,
@@ -45,10 +55,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   focusedBorder: {
-    borderColor: 'black'
+    borderColor: 'black',
   },
   unfocusedBorder: {
     borderColor: '#ffffff',
+  },
+  errorBorder: {
+    borderColor: 'red'
   },
   textInput: {
     marginLeft: 12,
@@ -58,5 +71,15 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 5,
     fontWeight: '600',
+  },
+  takenUsername: {
+    color: 'red',
+    fontSize: 12,
+    marginBottom: 5
+  },
+  usernameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 });

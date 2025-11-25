@@ -82,7 +82,7 @@
 
 9. გუგლით Sign-in რო გავაკეთოთ საჭიროა GoogleSignin.configure({})-ში მივუთითოთ webClientId: რომელიც არის ის Client ID რომელიც წამოვიღეთ Google Cloud Console-ის ჩვენი პროექტიდან და პროვაიდერებში Web SDK configuration-ის გასამართად გამოვიყენეთ. 
 
-
+10. თუ მომავალში უნდა დაემატოს firebase storage შენ პროექტს, GoogleService-Info.plist და google-services.json თავიდან უნდა იყოს გადმოწერილი და ზუსტად ისე დამატებული ios-ის ფოლდერს როგორც მაღლა არის ნახსენები. 
 
 
 

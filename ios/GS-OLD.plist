@@ -7,7 +7,7 @@
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.806721023668-ldf7j234ue1fjo4ppj1354bj2c2o6kjs</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>806721023668-ss3sirmrgd6kvgkhpjlf1uc4536fcsut.apps.googleusercontent.com</string>
+	<string>806721023668-ap1d1032gmkov2fvr9i0fab60krriu15.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBjZ0jzCLIHl9gkwnjNigGE4O7y_R2VH10</string>
 	<key>GCM_SENDER_ID</key>
@@ -32,7 +32,5 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:806721023668:ios:e84b2827324a5226aef1e1</string>
-	<key>DATABASE_URL</key>
-	<string>https://cloneproject-0000-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

@@ -21,6 +21,9 @@ PODS:
   - Firebase/Database (12.4.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 12.4.0)
+  - Firebase/Storage (12.4.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 12.4.0)
   - FirebaseAppCheckInterop (12.4.0)
   - FirebaseAuth (12.4.0):
     - FirebaseAppCheckInterop (~> 12.4.0)
@@ -47,6 +50,13 @@ PODS:
     - GoogleUtilities/UserDefaults (~> 8.1)
     - leveldb-library (~> 1.22)
   - FirebaseSharedSwift (12.4.0)
+  - FirebaseStorage (12.4.0):
+    - FirebaseAppCheckInterop (~> 12.4.0)
+    - FirebaseAuthInterop (~> 12.4.0)
+    - FirebaseCore (~> 12.4.0)
+    - FirebaseCoreExtension (~> 12.4.0)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GTMSessionFetcher/Core (< 6.0, >= 3.4)
   - fmt (11.0.2)
   - glog (0.3.5)
   - GoogleSignIn (9.0.0):
@@ -2645,6 +2655,10 @@ PODS:
     - Firebase/Database (= 12.4.0)
     - React-Core
     - RNFBApp
+  - RNFBStorage (23.5.0):
+    - Firebase/Storage (= 12.4.0)
+    - React-Core
+    - RNFBApp
   - RNGoogleSignin (16.0.0):
     - boost
     - DoubleConversion
@@ -2820,6 +2834,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
+  - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - SocketRocket (~> 0.7.1)
@@ -2838,6 +2853,7 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseDatabase
     - FirebaseSharedSwift
+    - FirebaseStorage
     - GoogleSignIn
     - GoogleUtilities
     - GTMAppAuth
@@ -3014,6 +3030,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBDatabase:
     :path: "../node_modules/@react-native-firebase/database"
+  RNFBStorage:
+    :path: "../node_modules/@react-native-firebase/storage"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
   RNScreens:
@@ -3037,6 +3055,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: d7f5a043c2cd01a08103ab586587c1468047bca6
   FirebaseDatabase: 0defdda58cfb6fb8816cf3984baa25bceb69fc6a
   FirebaseSharedSwift: 93426a1de92f19e1199fac5295a4f8df16458daa
+  FirebaseStorage: 20d6b56fb8a40ebaa03d6a2889fe33dac64adb73
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
@@ -3123,6 +3142,7 @@ SPEC CHECKSUMS:
   RNFBApp: 255fa19a91d6c1309e021ee75d5d209754e5961b
   RNFBAuth: 7123a71a1fc8dec4aa4e6cb656562661b3ece9f7
   RNFBDatabase: 1a476166a6b556fe12b3994ba63ecc53d151b391
+  RNFBStorage: def85d336679fedc62bbf967026fa924a5163d37
   RNGoogleSignin: 85c82d6e1494bd4a039804959362e63771f7ad5a
   RNScreens: 98771ad898d1c0528fc8139606bbacf5a2e9d237
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748

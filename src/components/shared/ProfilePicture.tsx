@@ -21,7 +21,9 @@ const ProfilePicture = ({ imageUri, onImagePicked }: Props) => {
   const handlePickImage = async () => {
     const result = await launchImageLibrary({
       mediaType: 'photo',
-      quality: 1,
+      quality: 0.7,
+      maxHeight: 800,
+      maxWidth: 800
     });
 
     if (result.didCancel) {
