@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
+import { signUpWithEmail } from '../utils/firebase/authService';
 import { useAuth } from '../context/AuthContext';
-import { signUpWithEmail } from '../utils/authService';
 
-import EmailTextInput from '../components/EmailTextInput';
-import Enter from '../components/Enter';
-import SignInGoogle from '../components/SignInGoogle';
-import PasswordRequirements from '../components/PasswordRequirements';
+import EmailTextInput from '../components/auth/EmailTextInput';
+import Enter from '../components/shared/Enter';
+import SignInGoogle from '../components/auth/SignInGoogle';
+import PasswordRequirements from '../components/auth/PasswordRequirements';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
-  const { login } = useAuth();
+  const { loginAsNewUser } = useAuth();
 
   const onPress = async () => {
     if (!isFormValid) return;
     const response = await signUpWithEmail(email, password);
     if (response.success) {
-      login();
+      loginAsNewUser();
     } else {
       Alert.alert('Login Failed', response.error);
     }

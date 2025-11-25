@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Alert } from 'react-native'
 import { passwordRecovery } from '../utils/authService'
 import { useNavigation, NavigationProp } from '@react-navigation/native'
 
-import EmailTextInput from '../components/EmailTextInput'
-import Enter from '../components/Enter'
+import EmailTextInput from '../components/auth/EmailTextInput'
+import Enter from '../components/shared/Enter'
 
 type RootStackParamList = {
   SignIn: undefined

@@ -7,9 +7,9 @@ import {
   NavigationProp,
 } from '@react-navigation/native';
 
-import SignInGoogle from '../components/SignInGoogle';
-import EmailTextInput from '../components/EmailTextInput';
-import Enter from '../components/Enter';
+import SignInGoogle from '../components/auth/SignInGoogle';
+import EmailTextInput from '../components/auth/EmailTextInput';
+import Enter from '../components/shared/Enter';
 
 type RootStackParamList = {
   SignUp: undefined; 

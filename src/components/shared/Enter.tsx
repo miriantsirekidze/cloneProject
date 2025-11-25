@@ -12,7 +12,7 @@ const { height, width } = Dimensions.get('window');
 
 interface Props {
   isFormValid: boolean;
-  onPress: () => {};
+  onPress: (() => {}) | (() => void);
 }
 
 const Enter = ({ onPress, isFormValid }: Props) => {

@@ -7,18 +7,24 @@ import Home from '../screens/Home';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
 import PassRecovery from '../screens/PassRecovery';
+import FinishRegistration from '../screens/FinishRegistration';
 import { StatusBar } from 'react-native';
 
 const MainNavigator = () => {
   const Stack = createNativeStackNavigator();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isProfileComplete } = useAuth();
 
   return (
     <NavigationContainer>
-      <StatusBar barStyle={'dark-content'}/>
+      <StatusBar barStyle={'dark-content'} />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {isAuthenticated ? (
+        {isAuthenticated && isProfileComplete ? (
           <Stack.Screen name="Home" component={Home} />
+        ) : isAuthenticated && !isProfileComplete ? (
+          <Stack.Screen
+            name="FinishRegistration"
+            component={FinishRegistration}
+          />
         ) : (
           <>
             <Stack.Screen name="SignIn" component={SignIn} />

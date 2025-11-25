@@ -16,6 +16,7 @@ import { storage, STORAGE_KEYS } from './store';
 interface AuthResponse {
   success: boolean;
   error?: string;
+  isNewUser?: boolean; 
 }
 
 const auth = getAuth();
@@ -33,22 +34,15 @@ export const loginWithEmail = async (
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
     const user = userCredential.user;
 
-    // 2. If successful, save the UID to MMKV
     storage.set(STORAGE_KEYS.USER_UID, user.uid);
     storage.set(STORAGE_KEYS.AUTH_TYPE, 'email');
 
     return { success: true };
   } catch (error: any) {
-    // 3. Handle errors (wrong password, no internet, etc)
     let errorMessage = 'Something went wrong';
-
-    if (error.code === 'auth/invalid-email')
-      errorMessage = 'Email address is invalid!';
-    if (error.code === 'auth/user-not-found')
-      errorMessage = 'No user found with this email.';
-    if (error.code === 'auth/wrong-password')
-      errorMessage = 'Incorrect password.';
-
+    if (error.code === 'auth/invalid-email') errorMessage = 'Email address is invalid!';
+    if (error.code === 'auth/user-not-found') errorMessage = 'No user found with this email.';
+    if (error.code === 'auth/wrong-password') errorMessage = 'Incorrect password.';
     return { success: false, error: errorMessage };
   }
 };
@@ -58,11 +52,7 @@ export const signUpWithEmail = async (
   pass: string,
 ): Promise<AuthResponse> => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      pass,
-    );
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
     const user = userCredential.user;
 
     storage.set(STORAGE_KEYS.USER_UID, user.uid);
@@ -71,11 +61,8 @@ export const signUpWithEmail = async (
     return { success: true };
   } catch (error: any) {
     let errorMessage = 'Something went wrong';
-
-    if (error.code === 'auth/email-already-in-use')
-      errorMessage = 'That email address is already in use!';
-    if (error.code === 'auth/invalid-email')
-      errorMessage = 'That email address is invalid!';
+    if (error.code === 'auth/email-already-in-use') errorMessage = 'That email address is already in use!';
+    if (error.code === 'auth/invalid-email') errorMessage = 'That email address is invalid!';
     return { success: false, error: errorMessage };
   }
 };
@@ -88,12 +75,8 @@ export const passwordRecovery = async (
     return { success: true };
   } catch (error: any) {
     let errorMessage = 'Something went wrong';
-
-    if (error.code === 'auth/invalid-email')
-      errorMessage = 'That email address is invalid!';
-    if (error.code === 'auth/user-not-found')
-      errorMessage = 'No user found with this email.';
-
+    if (error.code === 'auth/invalid-email') errorMessage = 'That email address is invalid!';
+    if (error.code === 'auth/user-not-found') errorMessage = 'No user found with this email.';
     return { success: false, error: errorMessage };
   }
 };
@@ -103,18 +86,22 @@ export const signInWithGoogle = async (): Promise<AuthResponse> => {
     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
     const signInResult = await GoogleSignin.signIn();
-
     let idToken = signInResult.data?.idToken;
+
+    if (!idToken) throw new Error('No ID Token found');
 
     const googleCredential = GoogleAuthProvider.credential(idToken);
 
     const userCredential = await signInWithCredential(auth, googleCredential);
     const user = userCredential.user;
 
+    const isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
+
     storage.set(STORAGE_KEYS.USER_UID, user.uid);
     storage.set(STORAGE_KEYS.AUTH_TYPE, 'google');
 
-    return { success: true };
+    return { success: true, isNewUser }; 
+    
   } catch (error: any) {
     let errorMessage = 'Google Sign-In failed';
 
