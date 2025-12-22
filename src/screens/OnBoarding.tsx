@@ -73,11 +73,7 @@ const OnBoarding = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      console.log('Starting submission...');
-
       const dataWithUrls = await processFormFiles(data, fields, uid);
-
-      console.log('Files uploaded, saving to DB:', dataWithUrls);
 
       await uploadFormData(fields, dataWithUrls);
 
