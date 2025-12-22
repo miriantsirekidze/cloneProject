@@ -77,15 +77,14 @@
   - android/app/build.gradle-ში ბოლო იმპორტად დავამატე - apply plugin: 'com.google.gms.google-services'
   - android/build.gradle-ში dependencies-ში ბოლო დავამატე - classpath("com.google.gms:google-services:4.4.4")
   
-8. შევედი android ფოლდერში და ჩავწერე - ./gradlew signingReport. წამოვიღე SHA1 სუ პირველი, რომელსაც debug ვარიანტი ჰქონდა.
+8. შევედი android ფოლდერში და ჩავწესრე - ./gradlew signingReport. წამოვიღე SHA1 სუ პირველი, რომელსაც debug ვარიანტი ჰქონდა.
   - შევედი firebase-ზე, აპლიკაციები სადაც არი, დავაჭირე android აპლიკაციას და მივუთითე წამოღებული SHA1 - SHA certificate fingerprints-ში.
 
 9. გუგლით Sign-in რო გავაკეთოთ საჭიროა GoogleSignin.configure({})-ში მივუთითოთ webClientId: რომელიც არის ის Client ID რომელიც წამოვიღეთ Google Cloud Console-ის ჩვენი პროექტიდან და პროვაიდერებში Web SDK configuration-ის გასამართად გამოვიყენეთ. 
 
 10. თუ მომავალში უნდა დაემატოს firebase storage შენ პროექტს, GoogleService-Info.plist და google-services.json თავიდან უნდა იყოს გადმოწერილი და ზუსტად ისე დამატებული ios-ის ფოლდერს როგორც მაღლა არის ნახსენები. 
 
-
-
+11. თუ მომავალში უნდა დაემატოს react-native-config სკრიპტები, google sign in-ისთვის უნდა მოხდეს ცვლილებები, უნდა გაკეთდეს ახალი ანდროიდის აპი, უმჯობესია development გარემოსთვის, რომელსაც მიეცემა com.{აპის სახელი}.development, რომელსაც მიეცემა იგივე SHA1 რაც მთავარ აპლიკაციას მიეცა და ახალი, განახლებული google-services.json უნდა იყოს გადმოწერილი და უნდა შეანაცვლოს ძველი ჯეისონი.
 
 
 

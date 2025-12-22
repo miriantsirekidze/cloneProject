@@ -1,6 +1,16 @@
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+
+project.ext.envConfigFiles = [
+    developmentdebug: ".env.development",
+    developmentrelease: ".env.development",
+    productiondebug: ".env.production",
+    productionrelease: ".env.production"
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 apply plugin: 'com.google.gms.google-services'
 
 /**
@@ -85,7 +95,20 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "build_config_package", "com.cloneproject"
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        development {
+            dimension "default"
+            applicationIdSuffix ".development" 
+        }
+        production {
+            dimension "default"
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -99,8 +122,6 @@ android {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

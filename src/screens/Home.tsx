@@ -1,33 +1,32 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { useAuth } from '../context/AuthContext'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+// import { useAuth } from '../context/AuthContext';
+import CountryList from '../testing/dev/CountryList';
 
 const Home = () => {
-
-  const {logout} = useAuth() 
-
-  const onPress = async() => {
-    logout()
-  } 
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={onPress} style={styles.signOut}>
-        <Text>Sign Out</Text>
-      </TouchableOpacity>
+      <CountryList />
     </View>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
-    flex: 1
+    justifyContent: 'center',
   },
-  signOut: {
+});
 
-  }
-})
+// const { logout } = useAuth();
+
+// const onPress = async () => {
+//   logout();
+// };
+
+// <TouchableOpacity onPress={onPress}>
+//   <Text>Sign Out</Text>
+// </TouchableOpacity>

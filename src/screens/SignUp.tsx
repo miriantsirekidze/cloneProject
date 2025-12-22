@@ -67,7 +67,7 @@ const SignUp = () => {
         match={passwordMatches}
       />
       <View style={styles.buttonContainer}>
-        <Enter onPress={onPress} isFormValid={!isFormValid} />
+        <Enter onPress={onPress} isFormValid={isFormValid} />
         <Text style={styles.text}>Or</Text>
         <SignInGoogle icon="logo-google" title="Sign up with Google" />
       </View>

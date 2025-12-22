@@ -9,6 +9,7 @@ import SignUp from '../screens/SignUp';
 import PassRecovery from '../screens/PassRecovery';
 import FinishRegistration from '../screens/FinishRegistration';
 import { StatusBar } from 'react-native';
+import OnBoarding from '../screens/OnBoarding';
 
 const MainNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -19,7 +20,10 @@ const MainNavigator = () => {
       <StatusBar barStyle={'dark-content'} />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {isAuthenticated && isProfileComplete ? (
-          <Stack.Screen name="Home" component={Home} />
+          <>
+            <Stack.Screen name="onBoarding" component={OnBoarding} />
+            <Stack.Screen name="Home" component={Home} />
+          </>
         ) : isAuthenticated && !isProfileComplete ? (
           <Stack.Screen
             name="FinishRegistration"

@@ -6,6 +6,7 @@ import {
   useNavigation,
   NavigationProp,
 } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 import SignInGoogle from '../components/auth/SignInGoogle';
 import EmailTextInput from '../components/auth/EmailTextInput';
@@ -37,6 +38,7 @@ const SignIn = () => {
 
   return (
     <View style={styles.container}>
+      <Text>{Config.APP_NAME}</Text>
       <Text>Sign in with Email</Text>
       <View style={styles.emailContainer}>
         <EmailTextInput
@@ -59,7 +61,7 @@ const SignIn = () => {
             <Text style={styles.buttonText}>Forget Password?</Text>
           </TouchableOpacity>
         </View>
-        <Enter onPress={onPress} isFormValid={!isFormValid} />
+        <Enter onPress={onPress} isFormValid={isFormValid} />
       </View>
       <Text style={styles.text}>Or</Text>
       <SignInGoogle icon="logo-google" title="Sign in with Google" />

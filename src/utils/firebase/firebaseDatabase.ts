@@ -5,11 +5,28 @@ import {
   update,
   serverTimestamp,
 } from '@react-native-firebase/database';
+import { mergeValuesToObject } from '../zod/formHelpers';
+import { storage, STORAGE_KEYS } from '../store';
 
 const DATABASE_URL =
   'https://cloneproject-0000-default-rtdb.europe-west1.firebasedatabase.app';
 
 const db = getDatabase(undefined, DATABASE_URL);
+const rootRef = ref(db);
+const uid = storage.getString(STORAGE_KEYS.USER_UID);
+
+interface UserProfileData {
+  uid: string;
+  username: string;
+  profilePicture: string;
+  dateOfBirth: number;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  } | null;
+  location: string;
+  registrationForm: any;
+}
 
 export const checkUsernameAvailability = async (
   username: string,
@@ -27,18 +44,6 @@ export const checkUsernameAvailability = async (
   }
 };
 
-interface UserProfileData {
-  uid: string;
-  username: string;
-  profilePicture: string;
-  dateOfBirth: number;
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  } | null;
-  location: string;
-}
-
 export const createUserProfile = async (data: UserProfileData) => {
   try {
     const normalizedUsername = data.username.toLowerCase();
@@ -52,34 +57,38 @@ export const createUserProfile = async (data: UserProfileData) => {
       coordinates: data.coordinates,
       location: data.location,
       createdAt: serverTimestamp(),
+      registrationForm: data,
     };
 
     updates[`/usernames/${normalizedUsername}`] = data.uid;
 
-    const rootRef = ref(db);
     await update(rootRef, updates);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getData = () => {
+export const uploadFormData = async (fieldsStructure: any, formData: any) => {
   try {
+    const fullForm = mergeValuesToObject(fieldsStructure, formData);
+
+    const updates: any = {};
+
+    updates[`users/${uid}/registrationForm`] = fullForm;
+
+    await update(rootRef, updates);
   } catch (error) {
-    console.log(error);
+    console.error('Firebase Error:', error);
+    throw error;
   }
 };
 
-export const updateData = () => {
-  try {
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const fetchRegistrationForm = async () => {
+  const snapshot = await get(ref(db, `users/${uid}/registrationForm`));
 
-export const removeData = () => {
-  try {
-  } catch (error) {
-    console.log(error);
+  if (!snapshot.exists()) {
+    throw new Error('Form not found');
   }
+
+  return snapshot.val();
 };

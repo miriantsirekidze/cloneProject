@@ -16,21 +16,21 @@ interface Props {
 }
 
 const Enter = ({ onPress, isFormValid }: Props) => {
-  const isDisabledStyle = isFormValid
-    ? { backgroundColor: '#00000080' }
-    : { backgroundColor: '#000000' };
+  const isEnabledStyle = isFormValid
+  ? { backgroundColor: '#000000' }
+  : { backgroundColor: '#00000080' }
 
-  const isDisabledOpacity = isFormValid ? 1 : 0.5;
+  const isEnabledOpacity = isFormValid ? 0.5 : 1;
 
   return (
     <TouchableOpacity
-      style={[styles.container, isDisabledStyle]}
+      style={[styles.container, isEnabledStyle]}
       onPress={onPress}
-      activeOpacity={isDisabledOpacity}
+      activeOpacity={isEnabledOpacity}
     >
       <View style={styles.dummyView} />
       <Text style={styles.text}>Enter</Text>
-      {!isFormValid ? (
+      {isFormValid ? (
         <Ionicons
           name="arrow-forward"
           size={20}

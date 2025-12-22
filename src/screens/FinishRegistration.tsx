@@ -22,6 +22,7 @@ import { storage, STORAGE_KEYS } from '../utils/store';
 import TextField from '../components/auth/TextField';
 import ProfilePicture from '../components/shared/ProfilePicture';
 import Enter from '../components/shared/Enter';
+import { DUMMY_FIELDS } from '../DATA';
 
 const { height } = Dimensions.get('window');
 
@@ -29,13 +30,14 @@ const FinishRegistration = () => {
   const [username, setUsername] = useState('');
   const [imageUri, setImageUri] = useState('');
   const [birthDate, setBirthDate] = useState<Date | null>(null);
-  const [usernameTaken, setUsernameTaken] = useState(false)
+  const [usernameTaken, setUsernameTaken] = useState(false);
   const [coordinates, setCoordinates] = useState<{
     latitude: number;
     longitude: number;
   } | null>(null);
 
-  const isFormValid = username.length > 3 && imageUri && birthDate;
+  const isFormValid =
+    username.length > 3 && imageUri && birthDate ? true : false;
   const { completeRegistration } = useAuth();
 
   const { data: locationData, isLoading: isLocationLoading } =
@@ -80,7 +82,7 @@ const FinishRegistration = () => {
   }, []);
 
   const onPress = async () => {
-    if (!isFormValid || !imageUri || !birthDate || !coordinates) return
+    if (!isFormValid || !imageUri || !birthDate || !coordinates) return;
 
     try {
       const currentUid = storage.getString(STORAGE_KEYS.USER_UID);
@@ -89,7 +91,7 @@ const FinishRegistration = () => {
       const isTaken = await checkUsernameAvailability(username);
 
       if (isTaken) {
-        setUsernameTaken(true)
+        setUsernameTaken(true);
         return;
       }
 
@@ -105,6 +107,7 @@ const FinishRegistration = () => {
           longitude: coordinates.longitude,
         },
         location: locationDisplayText,
+        registrationForm: DUMMY_FIELDS,
       });
 
       completeRegistration();
@@ -134,7 +137,7 @@ const FinishRegistration = () => {
           isTaken={usernameTaken}
         />
         <DateInput date={birthDate} onChange={setBirthDate} title="Birthday" />
-        <Enter onPress={onPress} isFormValid={!isFormValid} />
+        <Enter onPress={onPress} isFormValid={isFormValid} />
       </View>
     </View>
   );

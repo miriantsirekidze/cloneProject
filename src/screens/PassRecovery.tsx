@@ -37,7 +37,7 @@ const PassRecovery = () => {
       />
       <Enter
         onPress={onPress}
-        isFormValid={!isFormValid}
+        isFormValid={isFormValid}
       />
     </View>
   )
